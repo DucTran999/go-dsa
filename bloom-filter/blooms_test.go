@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewBloomFilter(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name        string
 		numOfItems  uint64
@@ -37,6 +38,7 @@ func TestNewBloomFilter(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := bloom.NewBloomFilter(tc.numOfItems, tc.fpRate)
 
 			assert.ErrorIs(t, err, tc.expectedErr)
@@ -45,6 +47,7 @@ func TestNewBloomFilter(t *testing.T) {
 }
 
 func TestBloomFilter(t *testing.T) {
+	t.Parallel()
 	bf, err := bloom.NewBloomFilter(1_000_000, 0.02)
 	require.NoError(t, err)
 	input := "daniel@gmail.com"

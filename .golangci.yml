@@ -42,6 +42,7 @@ linters:
     - nlreturn
     - varnamelen
     - revive
+    - intrange
 
   settings:
     depguard:
