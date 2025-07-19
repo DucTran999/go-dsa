@@ -1,0 +1,32 @@
+version: "3"
+
+dotenv:
+  - ".env"
+
+tasks:
+  default:
+    desc: "show all available tasks"
+    cmds:
+      - task --list-all
+    silent: true
+
+  lint:
+    cmds:
+      - golangci-lint run --timeout 5m --config .golangci.yml
+    silent: true
+
+  tidy:
+    desc: install pkg listed in go.mod
+    cmds:
+      - go mod tidy
+
+  codecov:
+    desc: run unit test and force coverage > 80%
+    cmds:
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -func=coverage.out | awk '/^total:/ { if ($3+0 < 80) { print "Coverage below 80%"; exit 1 } }'
+
+  deps:
+    desc: install dependencies
+    cmds:
+      - go install github.com/vektra/mockery/v2@v2.46.3
